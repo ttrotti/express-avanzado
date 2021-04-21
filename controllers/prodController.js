@@ -1,6 +1,7 @@
-let PROD_DB = [];
-
 class ProductController {
+    constructor() {
+        let PROD_DB = [];
+    }
     
     add(data) {
         if(data.title === undefined) {

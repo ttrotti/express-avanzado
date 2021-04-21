@@ -7,7 +7,7 @@ const PORT = 8080;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get('/api/productos', (req, res) => {
+app.get('/productos', (req, res) => {
     const data = product.get()
     if(!data) {
         return res.status(404).json({
@@ -18,7 +18,7 @@ app.get('/api/productos', (req, res) => {
     res.json(data);
 });
 
-app.post('/api/productos', (req, res) => {
+app.post('/productos', (req, res) => {
     const data = req.body;
     const newData = product.add(data);
     if(newData.error) {
@@ -27,7 +27,7 @@ app.post('/api/productos', (req, res) => {
     res.status(201).json(newData);
 });
 
-app.get('/api/productos/:id', (req, res) => {
+app.get('/productos/:id', (req, res) => {
     const { id } = req.params;
     const filteredProduct = product.getById(id);
     if(!filteredProduct) {
