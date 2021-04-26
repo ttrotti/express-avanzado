@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const data = req.body;
+    console.log(req.data)
     const newData = product.add(data);
     if(newData.error) {
         return res.status(401).json(newData.error)
