@@ -12,12 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
 app.use(express.static("views"));
-
-app.engine('hbs', exphbs({
-    extname: 'hbs',
-    defaultLayout: 'main'
-}));
-app.set('view engine', 'hbs');
+app.set('view engine', 'pug');
 
 app.use('/api/productos', productRouter)
 app.use('/productos', frontRouter)
