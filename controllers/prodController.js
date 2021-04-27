@@ -20,6 +20,11 @@ class ProductController {
             })
         }
         data.id = this.PROD_DB.length + 1;
+        if(this.PROD_DB.length % 2 == 0) {
+            data.thumbnail = "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-512.png"
+        } else {
+            data.thumbnail = "https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-512.png"
+        }
         this.PROD_DB.push(data)
         return data
     }
