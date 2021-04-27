@@ -9,18 +9,16 @@ router.get('/', (req, res) => {
             error: "no hay productos cargados"
         })
     }
-
     res.json(data);
 });
 
 router.post('/', (req, res) => {
     const data = req.body;
-    console.log(req.data)
     const newData = product.add(data);
     if(newData.error) {
         return res.status(401).json(newData.error)
     }
-    res.status(201).json(newData);
+    res.status(201).json(newData)
 });
 
 router.get('/:id', (req, res) => {
