@@ -3,7 +3,7 @@ import product from '../controllers/prodController.js'
 const router = express.Router();
 
 router.get('/input', (req, res) => {
-    res.render('index.hbs')
+    res.render('index.ejs')
 });
 
 router.get('/vista', (req, res) => {
