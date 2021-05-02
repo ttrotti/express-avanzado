@@ -3,8 +3,13 @@ import product from '../controllers/prodController.js'
 const router = express.Router();
 
 router.get('/input', (req, res) => {
-    res.render('index.hbs')
+    res.render('index.pug')
 });
+
+router.post('/input', (req, res) => {
+    product.add(req.body)
+    res.render('index.pug')
+})
 
 router.get('/vista', (req, res) => {
     const data = product.get();
