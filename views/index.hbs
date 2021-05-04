@@ -3,10 +3,10 @@
     <head>
         <title>Input de Producto</title>
     </head>
-    <body>
-        <div class="container border mt-5 p-3 bg-light">
+    <body class="container">
+        <div class="border mt-5 p-3 bg-light">
             <h1 class="mb-3">Ingrese un producto</h1>
-            <form action="/api/productos" method="POST">
+            <form action="/productos/input" method="POST">
                 <div class="form-group">
                     <label for="title">Nombre:</label>
                     <input class="form-control" name="title" type="text" placeholder="nombre de su producto" />
@@ -22,6 +22,22 @@
         
                 <button class="btn btn-success" type="submit">Enviar</button>
             </form>
-    </div>
+            <br>
+            <div id="tabla-productos">
+            <table class="table table-striped">
+                <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Imagen</th>
+                        </tr>
+                </thead>
+
+                <tbody id="listado">
+                </tbody>
+            </table>
+        </div>
+        </div>
     </body>
 </html>
