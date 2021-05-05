@@ -6,38 +6,46 @@
     <body class="container">
         <div class="border mt-5 p-3 bg-light">
             <h1 class="mb-3">Ingrese un producto</h1>
-            <form action="/productos/input" method="POST">
+            <form onsubmit="return addProduct(this)">
                 <div class="form-group">
                     <label for="title">Nombre:</label>
-                    <input class="form-control" name="title" type="text" placeholder="nombre de su producto" />
+                    <input class="form-control" id="prodTitle" type="text" placeholder="nombre de su producto" />
                 </div>
                 <div class="form-group">
                     <label for="price">Precio:</label>
-                    <input class="form-control" name="price" type="text" placeholder="precio de su producto" />
+                    <input class="form-control" id="prodPrice" type="text" placeholder="precio de su producto" />
                 </div>
                 <div class="form-group">
                     <label for="thumbnail">Image Url:</label>
-                    <input class="form-control" name="thumbnail" type="text" placeholder="thumbnail de su producto" />
+                    <input class="form-control" id="prodThumbnail" type="text" placeholder="thumbnail de su producto" />
                 </div>
         
                 <button class="btn btn-success" type="submit">Enviar</button>
             </form>
             <br>
             <div id="tabla-productos">
-            <table class="table table-striped">
-                <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Imagen</th>
-                        </tr>
-                </thead>
-
-                <tbody id="listado">
-                </tbody>
-            </table>
+                <table class="table table-striped">
+                    <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Imagen</th>
+                            </tr>
+                    </thead>
+                    <tbody id="listado">
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <div class="border mb-2 mt-2 p-3 bg-light">
+            <div id="messages">
+            </div>
+            <form onsubmit="return addMessage(this)" id="message-form">
+                <input type="text" id="msgAuthor" placeholder="Tu nombre">
+                <input type="text" id="msgBody" placeholder="Tu mensaje">
+                <input type="submit" value="Enviar">
+            </form>
         </div>
     </body>
 </html>
