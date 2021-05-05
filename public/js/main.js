@@ -3,6 +3,20 @@ let productCounter = 0;
 
 // Templates
 
+const tablaTemplate = Handlebars.compile(`
+<table class="table table-striped">
+    <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Imagen</th>
+            </tr>
+    </thead>
+    <tbody id="listado">
+    </tbody>
+</table>`)
+
 const productoTemplate = Handlebars.compile(`
 <tr>
     <th scope="row" class="align-middle"><p class="m-0 p-0">{{elem.id}}</p></th>
@@ -14,8 +28,7 @@ const productoTemplate = Handlebars.compile(`
 
 const messageTemplate = Handlebars.compile(`
 <div class="mb-2">
-    <p class="m-0 p-0"><strong>{{elem.author}}</strong>:</p>
-    <p class="m-0 p-0"><em>{{elem.body}}</em></p>
+    <p class="m-0 p-0"><strong style="color: blue">{{elem.author}}</strong> <span style="color: brown">[{{elem.date}}]</span>: <em style="class: green">{{elem.body}}</em></p>
 </div>
 `)
 
@@ -50,7 +63,8 @@ function addProduct(e) {
 function addMessage(e) {
     let message = {
         author: document.getElementById('msgAuthor').value,
-        body: document.getElementById('msgBody').value
+        body: document.getElementById('msgBody').value,
+        date: new Date().toLocaleString('es-AR')
     };
     socket.emit('new-message', message);
     return false;
@@ -60,8 +74,9 @@ function addMessage(e) {
 
 socket.on('productos', productos => {
     if(productos.length < 1) {
-        return document.getElementById('tabla-productos').innerHTML = "<p>No hay productos cargados.</p>"; 
+        return document.getElementById('tabla-productos').innerHTML = "<p class='m-0 p-0'>No hay productos cargados</p>" ; 
     }
+    document.getElementById('tabla-productos').innerHTML = tablaTemplate()
     render(productos, productoTemplate, 'listado')
     // productosHtml = [];
     // for (prod of productos) {
@@ -77,7 +92,7 @@ socket.on('productos', productos => {
 
 socket.on('messages', messages => {
     if(messages.length < 1) {
-        return document.getElementById('messages').innerHTML = "<p>Aún no hay mensajes.</p><br>"; 
+        return document.getElementById('messages').innerHTML = "<p class='m-0 p-0'>Aún no hay mensajes.</p><br>"; 
     }
     render(messages, messageTemplate, 'messages')
 })
