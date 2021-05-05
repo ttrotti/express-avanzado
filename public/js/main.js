@@ -66,6 +66,7 @@ function addMessage(e) {
         body: document.getElementById('msgBody').value,
         date: new Date().toLocaleString('es-AR')
     };
+    if(!message.author) return false
     socket.emit('new-message', message);
     return false;
 }
