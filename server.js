@@ -1,50 +1,47 @@
-import express from 'express';
-import productRouter from './routes/products.js'
-import frontRouter from './routes/front.js'
-import exphbs from 'express-handlebars'
-import cors from 'cors'
-import { Server as HttpServer } from 'http';
-import { Server as IOServer } from 'socket.io';
-
-const app = express();
-const httpServer = new HttpServer(app)
-const io = new IOServer(httpServer)
-
-const messages = [];
-const productos= [];
-
-io.on('connection', (socket) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+exports.__esModule = true;
+var express_1 = __importDefault(require("express"));
+var products_js_1 = __importDefault(require("./routes/products.js"));
+var front_js_1 = __importDefault(require("./routes/front.js"));
+var express_handlebars_1 = __importDefault(require("express-handlebars"));
+var cors_1 = __importDefault(require("cors"));
+var http_1 = require("http");
+var socket_io_1 = require("socket.io");
+var app = express_1["default"]();
+var httpServer = new http_1.Server(app);
+var io = new socket_io_1.Server(httpServer);
+var messages = [];
+var productos = [];
+io.on('connection', function (socket) {
     console.log("Usuario conectado");
-    socket.emit('messages', messages)
-    socket.emit('productos', productos)
-
-    socket.on('new-product', (newProduct) => {
+    socket.emit('messages', messages);
+    socket.emit('productos', productos);
+    socket.on('new-product', function (newProduct) {
         productos.push(newProduct);
         io.sockets.emit('productos', productos);
-    })
-    socket.on('new-message', (newMessage) => {
+    });
+    socket.on('new-message', function (newMessage) {
         messages.push(newMessage);
         io.sockets.emit('messages', messages);
-    })
+    });
 });
-
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cors());
-app.use(express.static("public"));
-app.use('/api/productos', productRouter)
-app.use('/productos', frontRouter)
-
-app.engine('hbs', exphbs({
+app.use(express_1["default"].json());
+app.use(express_1["default"].urlencoded({ extended: true }));
+app.use(cors_1["default"]());
+app.use(express_1["default"].static("public"));
+app.use('/api/productos', products_js_1["default"]);
+app.use('/productos', front_js_1["default"]);
+app.engine('hbs', express_handlebars_1["default"]({
     extname: 'hbs',
     defaultLayout: 'main'
 }));
 app.set('view engine', 'hbs');
-app.set('views', "./views")
-
-const PORT = 8080;
-const server = httpServer.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`)
+app.set('views', "./views");
+var PORT = 8080;
+var server = httpServer.listen(PORT, function () {
+    console.log("Servidor escuchando en el puerto " + PORT);
 });
-
-server.on('error', err => console.log("Error message:" + err))
+server.on('error', function (err) { return console.log("Error message:" + err); });
