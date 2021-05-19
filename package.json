@@ -3,10 +3,10 @@
   "name": "express-avanzado",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.es6.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "nodemon server.es6.js",
     "ServerES6toJS5": "babel server.es6.js -o server.es5.js -w",
     "ServerTStoJS5": "tsc server.ts -w --esModuleInterop"
   },
@@ -17,10 +17,14 @@
     "babel-preset-env": "^1.7.0",
     "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
     "handlebars": "^4.7.7",
+    "knex": "^0.95.6",
+    "mysql": "^2.18.1",
     "socket.io": "^4.0.1",
+    "sqlite3": "^5.0.2",
     "typescript": "^4.2.4"
   }
 }

@@ -1,60 +1,56 @@
+import Product from '../models/Product.js'
 class ProductController {
-    constructor() {
-        this.PROD_DB = [];
+    async add(req, res) {
+        const data = req.body;
+        const newData = await Product.add(data);
+        if(newData.error) {
+            return res.status(401).json(newData.error)
+        }
+        res.status(201).json(newData)
     }
-    
-    add(data) {
-        if(data.title === undefined) {
-            return({
-                error: "debe completar un título para su artículo"
+
+    async get(req, res) {
+        const data = await Product.get()
+        if(!data.length) {
+            return res.status(404).json({
+                error: "no hay productos cargados"
             })
         }
-        if(data.price === undefined) {
-            return({
-                error: "debe completar un precio para su artículo"
+        res.json(data);
+    }
+
+    async getById(req, res) {
+        const { id } = req.params;
+        const filteredProduct = await Product.get(id);
+        if(!filteredProduct.length) {
+            return res.status(404).json({
+                error: "producto no encontrado"
             })
         }
-        if(data.thumbnail === undefined) {
-            return({
-                error: "debe completar un thumbnail para su artículo"
+        res.json(filteredProduct);
+    }
+
+    async update(req, res) {
+        const data = req.body;
+        const { id } = req.params;
+        const updatedProduct = await Product.update(data, id)
+        if(!updatedProduct.length) {
+            return res.status(404).json({
+                error: "producto no encontrado"
             })
         }
-        data.id = this.PROD_DB.length + 1;
-        if(this.PROD_DB.length % 2 == 0) {
-            data.thumbnail = "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-512.png"
-        } else {
-            data.thumbnail = "https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-512.png"
+        res.json(updatedProduct);
+    }
+
+    async delete(req, res) {
+        const { id } = req.params;
+        const deletedProduct = await Product.delete(id)
+        if(!deletedProduct.length) {
+            return res.status(404).json({
+                error: "producto no encontrado"
+            })
         }
-        this.PROD_DB.push(data)
-        return data
-    }
-
-    get() {
-        if(this.PROD_DB.length < 1) return false;
-        return this.PROD_DB;
-    }
-
-    getById(id) {
-        const filtered = this.PROD_DB.filter((product) => product.id === parseInt(id))[0]
-        if (!filtered) return false;
-        return filtered;
-    }
-
-    update(data, id) {
-        const filtered = this.PROD_DB.filter((product) => product.id === parseInt(id))[0];
-        if (!filtered) return false;
-        filtered.title = data.title;
-        filtered.price = data.price;
-        filtered.thumbnail = data.thumbnail;
-        return filtered;
-    }
-
-    delete(id) {
-        const filtered = this.PROD_DB.filter((product) => product.id === parseInt(id));
-        if(!filtered) return false
-
-        this.PROD_DB = this.PROD_DB.filter((product) => product.id !== parseInt(id));
-        return filtered;
+        res.json(deletedProduct);
     }
 }
 

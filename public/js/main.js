@@ -1,5 +1,4 @@
 const socket = io.connect();
-let productCounter = 0;
 
 // Templates
 
@@ -46,16 +45,10 @@ function render(data, template, elementId) {
 
 function addProduct(e) {
     let product = {
-        id: productCounter++,
         title: document.getElementById('prodTitle').value,
         price: document.getElementById('prodPrice').value,
         thumbnail: document.getElementById('prodThumbnail').value
     };
-    if(productCounter % 2 == 0) {
-        product.thumbnail = "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-512.png"
-    } else {
-        product.thumbnail = "https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-512.png"
-    }
     socket.emit('new-product', product);
     return false;
 }
@@ -74,19 +67,11 @@ function addMessage(e) {
 // Table 
 
 socket.on('productos', productos => {
-    if(productos.length < 1) {
+    if(!productos || productos.length < 1) {
         return document.getElementById('tabla-productos').innerHTML = "<p class='m-0 p-0'>No hay productos cargados</p>" ; 
     }
     document.getElementById('tabla-productos').innerHTML = tablaTemplate()
     render(productos, productoTemplate, 'listado')
-    // productosHtml = [];
-    // for (prod of productos) {
-    //     const productHtml = productoTemplate({ producto: prod });
-    //     productosHtml.push(productHtml);
-    // }
-    // productosHtml = productosHtml.join('')
-    // document.getElementById('listado').innerHTML = productosHtml;
-
 });
 
 // Messages
