@@ -66,12 +66,12 @@ function addMessage(e) {
 
 // Table 
 
-socket.on('productos', productos => {
-    if(!productos || productos.length < 1) {
+socket.on('products', products => {
+    if(!products || products.length < 1) {
         return document.getElementById('tabla-productos').innerHTML = "<p class='m-0 p-0'>No hay productos cargados</p>" ; 
     }
     document.getElementById('tabla-productos').innerHTML = tablaTemplate()
-    render(productos, productoTemplate, 'listado')
+    render(products, productoTemplate, 'listado')
 });
 
 // Messages

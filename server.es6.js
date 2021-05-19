@@ -1,6 +1,7 @@
 import express from 'express';
 import productRouter from './routes/products.js'
 import Product from './models/Product.js'
+import Message from './models/Message.js'
 import frontRouter from './routes/front.js'
 import exphbs from 'express-handlebars'
 import cors from 'cors'
@@ -11,21 +12,20 @@ const app = express();
 const httpServer = new HttpServer(app)
 const io = new IOServer(httpServer)
 
-const messages = [];
-
 io.on('connection', async (socket) => {
-    const productos = await Product.get()
+    const products = await Product.get()
+    const messages = await Message.get()
     console.log("Usuario conectado");
     socket.emit('messages', messages)
-    socket.emit('productos', productos)
-
+    socket.emit('products', products)
+    
     socket.on('new-product', async (newProduct) => {
         await Product.add(newProduct);
-        io.sockets.emit('productos', await Product.get());
+        io.sockets.emit('products', await Product.get());
     })
-    socket.on('new-message', (newMessage) => {
-        messages.push(newMessage);
-        io.sockets.emit('messages', messages);
+    socket.on('new-message', async (newMessage) => {
+        await Message.add(newMessage);
+        io.sockets.emit('messages', await Message.get());
     })
 });
 

@@ -12,6 +12,13 @@ const options = {
     }
 }
 
-const db = knex(options)
+const sqlite3Options = {
+    client: 'sqlite3',
+    connection: {
+        filename: './mydb.sqlite'
+    },
+    useNullAsDefault: true
+}
 
-export default db
+export const sqliteDB = knex(sqlite3Options)
+export const db = knex(options)
