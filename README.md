@@ -1,3 +1,7 @@
+Clase 20: En el .env suministrar un MONGO_URI para la conexión de mongoDB.  
+
+Clase 17: Hace falta armar un .env con: DB_USER, DB_PASS, DB_HOST y DB_NAME para que funcione la configuración de MySQL.
+
 Clase 11: 
 Prefiero usar Pug para mi proyecto, principalmente por la sintaxis. 
 Me resultó mucho más rápido entender el flujo de información y pensar cuáles serían otras maneras de organizar la información. 
