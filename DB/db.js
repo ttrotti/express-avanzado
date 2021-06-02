@@ -1,7 +1,14 @@
 import knex from 'knex';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config()
 
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+const connection = mongoose.connection;
+
+export default connection;
+
+/*
 const options = {
     client: 'mysql',
     connection: {
@@ -22,3 +29,5 @@ const sqlite3Options = {
 
 export const sqliteDB = knex(sqlite3Options)
 export const db = knex(options)
+*/
+

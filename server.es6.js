@@ -7,6 +7,11 @@ import exphbs from 'express-handlebars'
 import cors from 'cors'
 import { Server as HttpServer } from 'http';
 import { Server as IOServer } from 'socket.io';
+import connection from './DB/db.js'
+
+connection.once('open', () => {
+    console.log("MongoDB database connection established successfully");
+});
 
 const app = express();
 const httpServer = new HttpServer(app)

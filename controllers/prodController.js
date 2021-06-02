@@ -11,7 +11,7 @@ class ProductController {
 
     async get(req, res) {
         const data = await Product.get()
-        if(!data.length) {
+        if(!data) {
             return res.status(404).json({
                 error: "no hay productos cargados"
             })
@@ -22,7 +22,7 @@ class ProductController {
     async getById(req, res) {
         const { id } = req.params;
         const filteredProduct = await Product.get(id);
-        if(!filteredProduct.length) {
+        if(!filteredProduct) {
             return res.status(404).json({
                 error: "producto no encontrado"
             })
@@ -34,7 +34,7 @@ class ProductController {
         const data = req.body;
         const { id } = req.params;
         const updatedProduct = await Product.update(data, id)
-        if(!updatedProduct.length) {
+        if(!updatedProduct) {
             return res.status(404).json({
                 error: "producto no encontrado"
             })
@@ -45,7 +45,7 @@ class ProductController {
     async delete(req, res) {
         const { id } = req.params;
         const deletedProduct = await Product.delete(id)
-        if(!deletedProduct.length) {
+        if(!deletedProduct) {
             return res.status(404).json({
                 error: "producto no encontrado"
             })
