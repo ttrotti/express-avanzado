@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 Clase 20: En el .env suministrar un MONGO_URI para la conexión de mongoDB.  
 
-=======
->>>>>>> 2939d872ec654fe1ee81b6d9f3bb768d84f385ae
 Clase 17: Hace falta armar un .env con: DB_USER, DB_PASS, DB_HOST y DB_NAME para que funcione la configuración de MySQL.
 
 Clase 11: 
