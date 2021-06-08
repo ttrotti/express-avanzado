@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import faker from 'faker'
+faker.locale = 'es'
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -16,12 +18,17 @@ const productSchema = new mongoose.Schema({
     }
 })
 
+const fakeProductSchema = () => {
+    return {
+        title: faker.commerce.product(),
+        price: faker.commerce.price(20, 500),
+        thumbnail: faker.image.business()
+    }
+}
+
 const products = mongoose.model('productos', productSchema);
 
 class Product {
-    constructor() {
-    }
-
     get = async (id) => {
         try {
             if(!id) return products.find({})
@@ -75,6 +82,21 @@ class Product {
             const deleted = await this.get(id)
             await products.deleteOne({_id: id})
             return deleted
+        }
+        catch(err) {
+            console.log(err)
+        }
+    }
+
+    getFakes = async (cant) => {
+        try {
+            if (cant == 0) return false
+            if (!cant) cant = 10
+            const array = []
+            for (let i = 0; i < cant; i++) {
+                array.push(fakeProductSchema())
+            }
+            return array
         }
         catch(err) {
             console.log(err)

@@ -52,6 +52,17 @@ class ProductController {
         }
         res.json(deletedProduct);
     }
+
+    async getFakes(req, res) {
+        const cant = req.query.cant;
+        const data = await Product.getFakes(cant)
+        if(!data) {
+            return res.status(404).json({
+                error: "no hay productos cargados"
+            })
+        }
+        res.json(data);
+    }
 }
 
 export default new ProductController();

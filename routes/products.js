@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/', prodController.get);
 router.post('/', prodController.add);
+router.get('/vista-test', prodController.getFakes)
 router.get('/:id', prodController.getById);
 router.put('/:id', prodController.update);
 router.delete('/:id', prodController.delete);
