@@ -1,4 +1,16 @@
 const socket = io.connect();
+const denormalize = normalizr.denormalize
+const schema = normalizr.schema
+
+// Schemas
+
+const schemaAuthor = new schema.Entity("author", {}, {idAttribute: 'email'})
+const schemaText = new schema.Entity("text", {})
+
+const normalizrMessage = new schema.Entity("message", {
+    author: schemaAuthor,
+    text: schemaText
+})
 
 // Templates
 
@@ -27,7 +39,7 @@ const productoTemplate = Handlebars.compile(`
 
 const messageTemplate = Handlebars.compile(`
 <div class="mb-2">
-    <p class="m-0 p-0"><strong style="color: blue">{{elem.author}}</strong> <span style="color: brown">[{{elem.date}}]</span>: <em style="class: green">{{elem.body}}</em></p>
+    <p class="m-0 p-0"><strong style="color: blue">{{elem.author.email}}</strong>: <em style="class: green">{{elem.text.body}}</em></p>
 </div>
 `)
 
@@ -55,9 +67,17 @@ function addProduct(e) {
 
 function addMessage(e) {
     let message = {
-        author: document.getElementById('msgAuthor').value,
-        body: document.getElementById('msgBody').value,
-        date: new Date().toLocaleString('es-AR')
+        author: {
+            email: document.getElementById('msgEmail').value,
+            name: 'martín',
+            surname: 'martínez',
+            age: 19,
+            alias: 'mmartinez223',
+            avatar: 'randomavatar'
+        },
+        text: {
+            body: document.getElementById('msgBody').value
+        }
     };
     if(!message.author) return false
     socket.emit('new-message', message);
@@ -76,9 +96,12 @@ socket.on('products', products => {
 
 // Messages
 
-socket.on('messages', messages => {
+socket.on('messages', normalizedMessages => {
+    let messages = denormalize(normalizedMessages.result, normalizrMessage, normalizedMessages.entities)
+    messages = messages.messages
     if(messages.length < 1) {
-        return document.getElementById('messages').innerHTML = "<p class='m-0 p-0'>Aún no hay mensajes.</p><br>"; 
+        return document.getElementById('messages').innerHTML = "<p class='m-0 p-0'>Aún no hay mensajes.</p><br>";
     }
     render(messages, messageTemplate, 'messages')
 })
+

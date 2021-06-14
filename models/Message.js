@@ -1,27 +1,63 @@
 import mongoose from 'mongoose';
+import normalizr from 'normalizr';
+const normalize = normalizr.normalize;
+const schema = normalizr.schema;
 
 const messageSchema = new mongoose.Schema({
     author: {
-        type: String,
-        required: true,
-        minlength: 3
+        email: {
+            type: String,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true   
+        },
+        surname: {
+            type: String,
+            required: true
+        },
+        age: {
+            type: Number,
+            required: true
+        },
+        alias: {
+            type: String,
+            required: true
+        },
+        avatar: {
+            type: String,
+            required: true
+        }
     },
-    body: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: Date,
-        required: true
+    text: {
+        body: {
+            type: String,
+            required: true,
+        }
     }
 })
 
 const messages = mongoose.model('mensajes', messageSchema);
 
+const schemaAuthor = new schema.Entity("author", {}, {idAttribute: 'email'})
+const schemaText = new schema.Entity("text", {})
+
+const normalizrMessage = new schema.Entity("message", {
+    author: schemaAuthor,
+    text: schemaText
+})
+
 class Message {
     get = async () => {
         try {
-            return await messages.find({})
+            const files = await messages.find({})
+            const filesWithId = {
+                id: 'mensajes',
+                messages: files.map(message => ({...message._doc}))
+            }
+            const normalizedFiles = normalize(filesWithId, normalizrMessage)
+            return normalizedFiles
         }
         catch(err) {
             console.log(err)

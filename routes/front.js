@@ -1,5 +1,5 @@
 import express from 'express';
-import product from '../controllers/prodController.js'
+import product from '../models/Product.js'
 const router = express.Router();
 
 router.get('/input', (req, res) => {
@@ -11,10 +11,8 @@ router.post('/input', (req, res) => {
     res.render('index.hbs')
 })
 
-router.get('/vista', (req, res) => {
-    const data = product.get();
-    if(!data) return res.status('404').render('products/listado')
-    res.render('products/listado', {products: data})
+router.get('/vista', async (req, res) => {
+    res.render('products/listado.hbs')
 });
 
 export default router;
