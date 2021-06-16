@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Login de usuario</title>
+    </head>
+    <body class="container">
+        {{#if logout}} 
+            <div class="bg-info mt-2 card p-4">
+                <div>Logged Out Successfully</div> 
+            </div>
+        {{/if}}
+        {{#if failed}} 
+            <div class="bg-danger mt-2 card p-4">
+                <div>Invalid username</div> 
+            </div>
+        {{/if}}
+        <div class="border mb-2 mt-2 p-3 bg-light">
+            <form action="/login" method="POST" id="login-form">
+                <h3>Login/Register</h3>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input name="username" class="form-control" id="username" type="text" placeholder="Su nombre de usuario" />
+                    </div>
+                <input class="btn btn-success" type="submit" value="Enviar">
+            </form>
+        </div>
+    </body>
+</html>

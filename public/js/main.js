@@ -1,9 +1,9 @@
 const socket = io.connect();
 const denormalize = normalizr.denormalize
 const schema = normalizr.schema
+const pathname = document.location.pathname
 
 // Schemas
-
 const schemaAuthor = new schema.Entity("author", {}, {idAttribute: 'email'})
 const schemaText = new schema.Entity("text", {})
 
@@ -13,7 +13,6 @@ const normalizrMessage = new schema.Entity("message", {
 })
 
 // Templates
-
 const tablaTemplate = Handlebars.compile(`
 <table class="table table-striped">
     <thead>
@@ -44,7 +43,6 @@ const messageTemplate = Handlebars.compile(`
 `)
 
 // Functions
-
 function render(data, template, elementId) {
     if(!data) return false;
     var html = data.map(function(elem, index) {
@@ -85,6 +83,15 @@ function addMessage(e) {
 }
 
 // Table 
+if(pathname == "/productos/input" || pathname == "/productos/vista")
+{
+    socket.emit('getProducts')
+}
+
+if(pathname == "/productos/vista-test")
+{
+    socket.emit('getTestProducts')
+}
 
 socket.on('products', products => {
     if(!products || products.length < 1) {
@@ -95,7 +102,10 @@ socket.on('products', products => {
 });
 
 // Messages
-
+if(pathname == "/productos/input")
+{
+    socket.emit('getMessages')
+}
 socket.on('messages', normalizedMessages => {
     let messages = denormalize(normalizedMessages.result, normalizrMessage, normalizedMessages.entities)
     messages = messages.messages
@@ -104,4 +114,3 @@ socket.on('messages', normalizedMessages => {
     }
     render(messages, messageTemplate, 'messages')
 })
-
