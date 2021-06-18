@@ -28,7 +28,7 @@ app.use(cookieParser(process.env.COOKIESECRET))
 app.use(session({
     store: MongoStore.create({  
     mongoUrl: `${process.env.MONGO_URI}`, 
-    ttl: 10
+    ttl: 600
 }),
     secret: process.env.SESSIONSECRET,
     resave: false,
