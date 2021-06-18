@@ -6,7 +6,7 @@
     <body class="container">
             {{#if session}} 
             <div class="bg-info mt-2 card p-4">
-                <div>Bienvenido{{#if counter}} de vuelta{{/if}}, {{session.username}} </div> 
+                <div>Bienvenido, {{session.username}}. Ésta es tu visita nº {{counter}}</div> 
                 <form action="/logout" method="GET">
                     <button class="button btn-danger">Logout</button>
                 </form>

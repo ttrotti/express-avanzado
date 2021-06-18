@@ -1,6 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import MongoStore from 'connect-mongo'
 import exphbs from 'express-handlebars'
 import cors from 'cors'
 
@@ -25,6 +26,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIESECRET))
 app.use(session({
+    store: MongoStore.create({  
+    mongoUrl: `${process.env.MONGO_URI}`, 
+    ttl: 10
+}),
     secret: process.env.SESSIONSECRET,
     resave: false,
     saveUninitialized: false,

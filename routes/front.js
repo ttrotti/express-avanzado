@@ -3,6 +3,11 @@ import product from '../models/Product.js'
 const router = express.Router();
 
 router.get('/input', (req, res) => {
+    if(req.session.counter) {
+        req.session.counter++
+    } else {
+        req.session.counter = 1
+    }
     res.render('index.hbs', {session: req.session, counter: req.session.counter})
 });
 

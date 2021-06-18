@@ -11,12 +11,6 @@ class userController {
             return res.render('login', {failed: true})
         }
         req.session.username = req.body.username
-        if(req.session.counter) {
-            req.session.counter++
-        } else {
-            req.session.counter = 0
-        }
-        console.log(req.session.counter)
         return res.redirect('/productos/input')
     }
 
