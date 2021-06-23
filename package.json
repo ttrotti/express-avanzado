@@ -15,6 +15,7 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "bcrypt": "^5.0.1",
     "bootstrap": "^4.6.0",
     "connect-mongo": "^4.4.1",
     "cookie-parser": "^1.4.5",
@@ -29,6 +30,8 @@
     "mongoose": "^5.12.12",
     "mysql": "^2.18.1",
     "normalizr": "^3.6.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "socket.io": "^4.0.1",
     "sqlite3": "^5.0.2",
     "typescript": "^4.2.4"

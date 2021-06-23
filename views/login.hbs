@@ -11,18 +11,50 @@
         {{/if}}
         {{#if failed}} 
             <div class="bg-danger mt-2 card p-4">
-                <div>Invalid username</div> 
+                <div>{{failMsg}}</div> 
             </div>
         {{/if}}
         <div class="border mb-2 mt-2 p-3 bg-light">
-            <form action="/login" method="POST" id="login-form">
-                <h3>Login/Register</h3>
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input name="username" class="form-control" id="username" type="text" placeholder="Su nombre de usuario" />
-                    </div>
-                <input class="btn btn-success" type="submit" value="Enviar">
-            </form>
+            <div>
+                <form autocomplete="false"  action="/login" method="POST" id="login-form">
+                    <h3>Login</h3>
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input name="username" class="form-control" id="username" type="text" placeholder="Su nombre de usuario" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input name="password" class="form-control" id="password" type="text" placeholder="Su nombre de usuario" />
+                        </div>
+                    <input class="btn btn-success" type="submit" value="Enviar">
+                </form>
+            </div>
+            <div>
+                <form autocomplete="false" action="/signup" method="POST" id="signup-form">
+                    <h3>Sign Up</h3>
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input name="username" class="form-control" id="username" type="text" placeholder="Su nombre de usuario" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input name="password" class="form-control" id="password" type="text" placeholder="Su contraseña" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input name="email" class="form-control" id="email" type="text" placeholder="Su dirección de mail" />
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input name="firstName" class="form-control" id="firstName" type="text" placeholder="Su primer nombre" />
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input name="lastName" class="form-control" id="lastName" type="text" placeholder="Su apellido" />
+                        </div>
+                    <input class="btn btn-success" type="submit" value="Enviar">
+                </form>
+            </div>
         </div>
     </body>
 </html>
