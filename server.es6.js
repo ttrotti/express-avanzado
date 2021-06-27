@@ -22,6 +22,7 @@ dotenv.config()
 import bCrypt from 'bcrypt'
 import passport from 'passport'
 import passportLocal from 'passport-local'
+import passportFacebook from 'passport-facebook'
 
 // MIDDLEWARE
 const app = express();
@@ -122,6 +123,7 @@ const User = mongoose.model('usuarios', userSchema);
 
 // PASSPORT
 const LocalStrategy = passportLocal.Strategy
+const FacebookStrategy = passportFacebook.Strategy
 
 const isValidPassword = function(user, password) {
     return bCrypt.compareSync(password, user.password)
@@ -130,6 +132,18 @@ const isValidPassword = function(user, password) {
 const createHash = function(password){
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)
 }
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: '/auth/facebook/callback'
+},
+    function(accessToken, refereshToken, profile, done) {
+        User.findOrCreate(profile.id, function(err, user) {
+            if(err) { return done(err) }
+            console.log('creado ' +user)
+            done(null, user)
+        })
+    }))
 
 passport.use('login', new LocalStrategy({
         passReqToCallback: true
