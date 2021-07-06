@@ -29,5 +29,11 @@ router.get('/fail', userController.showFailure)
 
 router.get('/logout', userController.logout)
 
+const enviroment = JSON.stringify(process.env, null, "\t")
+const memoryUsage = JSON.stringify(process.memoryUsage(), null, "\t")
+router.get('/info', async(req, res) => {
+    res.render('info.hbs', {args: process.argv, directory: process.cwd(), processID: process.pid, version: process.version, processTitle: process.title, platform: process.platform, memoryUsage: memoryUsage, enviroment: enviroment})
+})
+
 
 export default router;

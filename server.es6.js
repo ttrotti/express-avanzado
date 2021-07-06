@@ -132,9 +132,10 @@ const isValidPassword = function(user, password) {
 const createHash = function(password){
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)
 }
+
 passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    clientID: process.argv[3] || process.env.FACEBOOK_APP_ID,
+    clientSecret: process.argv[4] || process.env.FACEBOOK_APP_SECRET,
     callbackURL: '/auth/facebook/callback'
 },
     function(accessToken, refereshToken, profile, done) {
@@ -219,7 +220,7 @@ passport.deserializeUser(function(id, done) {
 })
 
 // SERVER
-const PORT = 8080;
+const PORT = process.argv[2] || 8080;
 const server = httpServer.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`)
 });
