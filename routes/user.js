@@ -2,6 +2,8 @@ import express from 'express';
 import userController from '../controllers/userController.js'
 import passport from 'passport'
 import { fork } from 'child_process'
+import { start } from 'repl';
+const randoms = fork('./randoms.js')
 
 const router = express.Router();
 
@@ -36,10 +38,10 @@ router.get('/info', async (req, res) => {
     res.render('info.hbs', {args: process.argv, directory: process.cwd(), processID: process.pid, version: process.version, processTitle: process.title, platform: process.platform, memoryUsage: memoryUsage, enviroment: enviroment})
 })
 
-router.get('/randoms', async (req, res) => {
-    const cant = req.query.cant;
-    const randoms = fork('./randoms.js')
-    randoms.send('start')
+router.get('/randoms', (req, res) => {
+    const cant = req.query.cant || 100000000;
+    randoms.send({cant: cant})
+    randoms.on('error', err => console.log("Error message:" + err))
     randoms.on('result', result => {
         res.json(result)
     })

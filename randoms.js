@@ -1,11 +1,12 @@
-process.on('start', cant => {
-    const n = cant || 100000000;
+process.on("message", cant => {
     const result = {};
-    console.log('forStarted')
-    for(let i = 0; i < n; i++) {
-        const randomNum = Math.floor(Math.random() * 1000)
-        if(!result[randomNum]) result[randomNum] = 0
+    for(let i = 0; i < cant; i++) {
+        const randomNum = Math.floor(Math.random() * 1000);
+        if(!result[randomNum]) {
+            result[randomNum] = 0
+        }
         ++result[randomNum]
     }
+    console.log(result)
     process.send({result: result})
 })
