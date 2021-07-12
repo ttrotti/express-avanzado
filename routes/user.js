@@ -42,7 +42,7 @@ router.get('/randoms', (req, res) => {
     const cant = req.query.cant || 100000000;
     randoms.send({cant: cant})
     randoms.on('error', err => console.log("Error message:" + err))
-    randoms.on('result', result => {
+    randoms.on('message', result => {
         res.json(result)
     })
 })
