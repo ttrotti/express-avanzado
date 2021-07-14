@@ -2,7 +2,7 @@ import express from 'express';
 import userController from '../controllers/userController.js'
 import passport from 'passport'
 import { fork } from 'child_process'
-import { start } from 'repl';
+import { cpus } from 'os'
 const randoms = fork('./randoms.js')
 
 const router = express.Router();
@@ -35,7 +35,7 @@ router.get('/logout', userController.logout)
 const enviroment = JSON.stringify(process.env, null, "\t")
 const memoryUsage = JSON.stringify(process.memoryUsage(), null, "\t")
 router.get('/info', async (req, res) => {
-    res.render('info.hbs', {args: process.argv, directory: process.cwd(), processID: process.pid, version: process.version, processTitle: process.title, platform: process.platform, memoryUsage: memoryUsage, enviroment: enviroment})
+    res.render('info.hbs', {args: process.argv, directory: process.cwd(), processID: process.pid, version: process.version, processTitle: process.title, platform: process.platform, memoryUsage: memoryUsage, enviroment: enviroment, numCpus: cpus().length})
 })
 
 router.get('/randoms', (req, res) => {

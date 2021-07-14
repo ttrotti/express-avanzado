@@ -222,7 +222,7 @@ passport.deserializeUser(function(id, done) {
 // SERVER
 const PORT = process.argv[2] || 8080;
 const server = httpServer.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`)
+    console.log(`Servidor escuchando en el puerto ${PORT}. Proceso N ${process.pid}`)
 });
 
 server.on('error', err => console.log("Error message:" + err))
