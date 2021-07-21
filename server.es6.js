@@ -24,8 +24,35 @@ import passport from 'passport'
 import passportLocal from 'passport-local'
 import passportFacebook from 'passport-facebook'
 
+import compression from 'compression'
+import log4js from 'log4js'
+
+// LOGGER
+log4js.configure({
+    appenders: {
+        console: {type: "console"},
+        myConsoleLogger: {type: "logLevelFilter", appender: 'console', level: "info"},
+        warningFile: {type: "file", filename: 'warnings.log'},
+        myWarningFile: {type: "logLevelFilter", appender: 'warningFile', level: "warn"},
+        errorFile: {type: "file", filename: 'errors.log'},
+        myErrorFile: {type: "logLevelFilter", appender: 'errorFile', level: "error"}
+    },
+    categories: {
+        default: {
+            appenders: ["myConsoleLogger"], 
+            level: "all"
+        },
+        logger: {
+            appenders: ["myConsoleLogger", "myWarningFile", "myErrorFile"],
+            level: "all"
+        }
+    }
+})
+const myOwnLogger = log4js.getLogger('logger');
+
 // MIDDLEWARE
 const app = express();
+app.use(compression())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser(process.env.COOKIESECRET))
@@ -49,7 +76,7 @@ app.use('/', userRouter)
 
 // DB CONNECTION
 connection.once('open', () => {
-    console.log("MongoDB database connection established successfully");
+    myOwnLogger.info("MongoDB database connection established successfully");
 });
 
 // SOCKET CONNECTION
@@ -60,7 +87,7 @@ io.on('connection', async (socket) => {
     const products = await Product.get()
     const testProducts = await Product.getFakes()
     const messages = await Message.get()
-    console.log("Usuario conectado");
+    myOwnLogger.info("Usuario conectado");
 
     // data requests
     socket.on('getMessages', () => {
@@ -141,7 +168,7 @@ passport.use(new FacebookStrategy({
     function(accessToken, refereshToken, profile, done) {
         User.findOrCreate(profile.id, function(err, user) {
             if(err) { return done(err) }
-            console.log('creado ' +user)
+            myOwnLogger.info('creado ' +user)
             done(null, user)
         })
     }))
@@ -155,15 +182,15 @@ passport.use('login', new LocalStrategy({
                 if(err)
                     return done(err);
                 if(!user) {
-                    console.log('User not found with username '+username);
+                    myOwnLogger.info('User not found with username '+username);
                     return done(null, false,
-                        console.log('error:', 'User not found.'));
+                        myOwnLogger.error('error:', 'User not found.'));
             }
 
                 if(!isValidPassword(user, password)){
-                    console.log('Invalid Password');
+                    myOwnLogger.warn('Invalid Password');
                     return done(null, false,
-                        console.log('error:', 'Invalid Password'));
+                        myOwnLogger.error('error:', 'Invalid Password'));
                 }
 
                 return done(null, user)
@@ -179,13 +206,13 @@ passport.use('signup', new LocalStrategy({
         const findOrCreateUser = function() {
             User.findOne({'username': username}, function(err, user) {
                 if(err){
-                    console.log('Error in SignUp: '+err);
+                    myOwnLogger.error('Error in SignUp: '+err);
                     return done(err)
                 }
                 if(user) {
-                    console.log('User Already Exists');
+                    myOwnLogger.warn('User Already Exists');
                     return done(null, false, 
-                        console.log('message', 'User already exists'));
+                        myOwnLogger.warn('message', 'User already exists'));
                 } else {
                     let newUser = new User();
                     newUser.username = username;
@@ -196,10 +223,10 @@ passport.use('signup', new LocalStrategy({
 
                     newUser.save(function(err){
                         if(err){
-                            console.log('Error in Saving user: '+err);
+                            myOwnLogger.error('Error in Saving user: '+err);
                             return done(err)
                         }
-                        console.log('User registration succesful');
+                        myOwnLogger.info('User registration succesful');
                         return done(null, newUser)
                     });
                 }
@@ -222,7 +249,7 @@ passport.deserializeUser(function(id, done) {
 // SERVER
 const PORT = process.argv[2] || 8080;
 const server = httpServer.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}. Proceso N ${process.pid}`)
+    myOwnLogger.info(`Servidor escuchando en el puerto ${PORT}. Proceso N ${process.pid}`)
 });
 
-server.on('error', err => console.log("Error message:" + err))
+server.on('error', err => myOwnLogger.info("Error message:" + err))
