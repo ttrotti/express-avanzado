@@ -1,3 +1,8 @@
 [2021-07-21T17:03:23.180] [WARN] logger - Invalid Password
 [2021-07-21T17:03:23.181] [ERROR] logger - error: Invalid Password
 [2021-07-21T17:03:55.195] [ERROR] logger - error: User not found.
+[2021-07-25T19:49:28.648] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use server.es6.js
+[2021-07-25T20:12:31.157] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8081
+[2021-07-25T20:18:28.803] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080
+[2021-07-25T20:19:45.004] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080
+[2021-07-25T20:20:07.401] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080

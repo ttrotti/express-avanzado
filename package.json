@@ -5,7 +5,7 @@
   "description": "",
   "main": "server.es6.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node benchmark.js",
     "start": "nodemon server.es6.js",
     "ServerES6toJS5": "babel server.es6.js -o server.es5.js -w",
     "ServerTStoJS5": "tsc server.ts -w --esModuleInterop",
@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "autocannon": "^7.4.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bcrypt": "^5.0.1",

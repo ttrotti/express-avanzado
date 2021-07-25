@@ -252,4 +252,4 @@ const server = httpServer.listen(PORT, () => {
     myOwnLogger.info(`Servidor escuchando en el puerto ${PORT}. Proceso N ${process.pid}`)
 });
 
-server.on('error', err => myOwnLogger.info("Error message:" + err))
+server.on('error', err => myOwnLogger.error("Error at launch:" + err))
