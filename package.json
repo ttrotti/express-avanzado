@@ -6,7 +6,8 @@
   "main": "server.es6.js",
   "scripts": {
     "test": "node benchmark.js",
-    "start": "nodemon server.es6.js",
+    "start": "node server.es6.js",
+    "localStart": "nodemon server.es6.js",
     "ServerES6toJS5": "babel server.es6.js -o server.es5.js -w",
     "ServerTStoJS5": "tsc server.ts -w --esModuleInterop",
     "FORK": "pm2 start server.es6.js --watch -- 8081",
