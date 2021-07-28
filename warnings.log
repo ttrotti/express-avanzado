@@ -6,3 +6,8 @@
 [2021-07-25T20:18:28.803] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080
 [2021-07-25T20:19:45.004] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080
 [2021-07-25T20:20:07.401] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080
+[2021-07-27T17:45:50.131] [ERROR] logger - error: User not found.
+[2021-07-27T17:46:04.238] [WARN] logger - Invalid Password
+[2021-07-27T17:46:04.239] [ERROR] logger - error: Invalid Password
+[2021-07-28T18:41:07.693] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080
+[2021-07-28T18:41:41.979] [ERROR] logger - Error at launch:Error: listen EADDRINUSE: address already in use :::8080

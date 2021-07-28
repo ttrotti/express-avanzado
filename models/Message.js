@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import normalizr from 'normalizr';
 const normalize = normalizr.normalize;
 const schema = normalizr.schema;
+import twilio from 'twilio'
+// const twilioClient = twilio(process.env.TWILIO_ID, process.env.TWILIO_AUTH_TOKEN)
 
 const messageSchema = new mongoose.Schema({
     author: {
@@ -66,6 +68,13 @@ class Message {
 
     add = async (message) => {
         try {
+            if(/\badministrador\b/.test(message.text.body)) {
+                // twilioClient.messages.create({
+                //     body: 'hola',
+                //     to: `${process.env.TEST_CELLPHONE}`,
+                //     from: '+14156504059'
+                // })         
+            }
             await messages(message).save()
             return message
         }

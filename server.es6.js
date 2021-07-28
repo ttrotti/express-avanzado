@@ -146,7 +146,7 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 })
-const User = mongoose.model('usuarios', userSchema);
+export const User = mongoose.model('usuarios', userSchema);
 
 // PASSPORT
 const LocalStrategy = passportLocal.Strategy
