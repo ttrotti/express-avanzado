@@ -9,6 +9,7 @@ import cors from 'cors'
 import productRouter from './routes/products.js'
 import userRouter from './routes/user.js'
 import frontRouter from './routes/front.js'
+import graphqlRouter from './routes/graphql.js'
 
 import connection from './DB/db.js'
 import Product from './models/Product.js'
@@ -70,6 +71,7 @@ app.use(passport.session())
 app.use(cors());
 
 app.use(express.static("public"));
+app.use('/graphql', graphqlRouter)
 app.use('/api/productos', productRouter)
 app.use('/productos', frontRouter)
 app.use('/', userRouter)
